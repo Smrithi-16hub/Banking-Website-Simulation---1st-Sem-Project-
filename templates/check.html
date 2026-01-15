@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}Check balance · Forest FinTech{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="section-title">
+    <h2>Check balance</h2>
+    <div class="section-sub">Find your account</div>
+  </div>
+  <form class="form" method="POST" action="{{ url_for('check') }}">
+    <div class="form-row">
+      <label for="account_number">Account number</label>
+      <input class="input" id="account_number" name="account_number" type="number" min="1" placeholder="e.g., 1001" required />
+    </div>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button class="btn" type="submit">Fetch balance</button>
+      <a class="btn btn-secondary" href="{{ url_for('index') }}">Back to dashboard</a>
+    </div>
+  </form>
+
+  {% if account %}
+    <div class="card" style="margin-top:16px;">
+      <div class="section-title">
+        <h2>Result</h2>
+      </div>
+      <div><span class="badge badge-forest">Acc {{ account.account_number }}</span></div>
+      <div style="margin-top:8px; font-weight:600;">{{ account.holder_name }}</div>
+      <div style="margin-top:4px; color: var(--text-600);">Balance: {{ account.balance }}</div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard · Forest FinTech{% endblock %}
+{% block content %}
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <div class="section-title">
+        <h2>Overview</h2>
+        <div class="section-sub">Quick stats for your simulation</div>
+      </div>
+      <div class="grid">
+        <div class="col-4">
+          <div class="card">
+            <div class="section-title">
+              <h2>Total accounts</h2>
+            </div>
+            <div style="font-size:2rem; color: var(--forest-900);">{{ total_accounts }}</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card">
+            <div class="section-title">
+              <h2>Next account number</h2>
+            </div>
+            <div style="font-size:1.6rem; color: var(--forest-700);">{{ next_acc }}</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card">
+            <div class="section-title">
+              <h2>Highest balance</h2>
+            </div>
+            {% if highest %}
+              <div><span class="badge badge-forest">Acc {{ highest.account_number }}</span></div>
+              <div style="margin-top:8px; font-weight:600;">{{ highest.holder_name }}</div>
+              <div style="margin-top:4px; color: var(--text-600);">Balance: {{ highest.balance }}</div>
+            {% else %}
+              <div class="section-sub">No accounts yet.</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn" href="{{ url_for('create') }}">Create account</a>
+        <a class="btn btn-secondary" href="{{ url_for('accounts') }}">View accounts</a>
+        <a class="btn" href="{{ url_for('deposit') }}">Deposit</a>
+        <a class="btn" href="{{ url_for('withdraw') }}">Withdraw</a>
+        <a class="btn btn-secondary" href="{{ url_for('check') }}">Check balance</a>
+        <a class="btn" href="{{ url_for('highest') }}">Highest balance</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

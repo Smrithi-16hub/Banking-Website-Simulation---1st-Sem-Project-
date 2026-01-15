@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}Forest FinTech{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+
+  <!-- Minimal CSS: Forest accents + pastel highlights -->
+  <style>
+    :root {
+      --forest-900: #0f3d2e;
+      --forest-700: #1f5c47;
+      --forest-500: #2f7a5f;
+      --forest-300: #5fa387;
+      --forest-100: #e6f3ee;
+
+      --pastel-mint: #d9f5e7;
+      --pastel-cream: #f7f5e7;
+      --pastel-blush: #fbe9e7;
+      --pastel-sky: #e7f3fb;
+
+      --text-900: #1b1f23;
+      --text-600: #4b5563;
+      --border: #e5e7eb;
+      --bg: #fafafa;
+      --card: #ffffff;
+      --shadow: 0 6px 20px rgba(0,0,0,0.06);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text-900);
+      background: linear-gradient(180deg, var(--bg), var(--pastel-cream));
+    }
+
+    /* Top nav */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: linear-gradient(90deg, var(--forest-900), var(--forest-700));
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .brand .logo {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: radial-gradient(circle at 30% 30%, var(--forest-300), var(--forest-700));
+      box-shadow: var(--shadow);
+    }
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: #e6fff3;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      transition: background 0.2s ease;
+    }
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.12);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .card + .card { margin-top: 16px; }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+    .col-12 { grid-column: span 12; }
+    .col-6 { grid-column: span 6; }
+    .col-4 { grid-column: span 4; }
+    .col-3 { grid-column: span 3; }
+    @media (max-width: 900px) {
+      .col-6, .col-4, .col-3 { grid-column: span 12; }
+    }
+
+    /* Section headers */
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .section-title h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: var(--forest-900);
+    }
+    .section-sub {
+      color: var(--text-600);
+      font-size: 0.95rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--forest-300);
+      background: linear-gradient(180deg, var(--pastel-mint), #c9efdd);
+      color: var(--forest-900);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.08s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+    .btn-secondary {
+      background: linear-gradient(180deg, var(--pastel-sky), #d7ecfa);
+      border-color: #bfe0f5;
+      color: #0f2740;
+    }
+    .btn-danger {
+      background: linear-gradient(180deg, var(--pastel-blush), #f7d9d3);
+      border-color: #f3c7bf;
+      color: #6b1b12;
+    }
+
+    /* Forms */
+    .form {
+      display: grid;
+      gap: 12px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 12px;
+      align-items: center;
+    }
+    .form-row label {
+      color: var(--text-600);
+    }
+    .input, .select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .input:focus, .select:focus {
+      border-color: var(--forest-300);
+      box-shadow: 0 0 0 4px var(--pastel-mint);
+    }
+
+    /* Table */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    .table th, .table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    .table thead th {
+      background: linear-gradient(180deg, var(--forest-100), #f2fbf7);
+      color: var(--forest-900);
+      font-weight: 600;
+    }
+    .table tbody tr:hover {
+      background: #fcfdfb;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+      background: var(--pastel-cream);
+      color: var(--forest-900);
+    }
+    .badge-forest {
+      background: var(--pastel-mint);
+      border-color: var(--forest-300);
+    }
+
+    /* Alerts (flash messages) */
+    .alerts { margin: 12px 0; }
+    .alert {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      box-shadow: var(--shadow);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .alert-success { border-color: #bfe8d6; background: #effaf5; color: #0f3d2e; }
+    .alert-error   { border-color: #f3c7bf; background: #fff5f3; color: #6b1b12; }
+    .alert-info    { border-color: #bfe0f5; background: #f2f8fd; color: #0f2740; }
+
+    /* Footer */
+    .footer {
+      margin-top: 40px;
+      padding: 16px;
+      color: var(--text-600);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>Forest FinTech</div>
+    </div>
+    <div class="nav-links">
+      <a href="{{ url_for('index') }}">Dashboard</a>
+      <a href="{{ url_for('create') }}">Create</a>
+      <a href="{{ url_for('check') }}">Check</a>
+      <a href="{{ url_for('deposit') }}">Deposit</a>
+      <a href="{{ url_for('withdraw') }}">Withdraw</a>
+      <a href="{{ url_for('accounts') }}">Accounts</a>
+      <a href="{{ url_for('highest') }}">Highest</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="alerts">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+              <span class="badge badge-forest">{{ category|capitalize }}</span>
+              <div>{{ message }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </div>
+
+  <footer class="footer">
+    <small>© {{ 2026 }} Forest FinTech — Minimalist banking simulation</small>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}Accounts · Forest FinTech{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="section-title">
+    <h2>All accounts</h2>
+    <div class="section-sub">List of holders and balances</div>
+  </div>
+
+  {% if accounts and accounts|length > 0 %}
+    <div class="card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Account #</th>
+            <th>Holder name</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for acc in accounts %}
+            <tr>
+              <td><span class="badge badge-forest">Acc {{ acc.account_number }}</span></td>
+              <td>{{ acc.holder_name }}</td>
+              <td>{{ acc.balance }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="section-sub">No accounts available.</div>
+  {% endif %}
+
+  <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+    <a class="btn" href="{{ url_for('create') }}">Create account</a>
+    <a class="btn btn-secondary" href="{{ url_for('index') }}">Back to dashboard</a>
+  </div>
+</div>
+{% endblock %}

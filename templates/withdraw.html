@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}Withdraw · Forest FinTech{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="section-title">
+    <h2>Withdraw funds</h2>
+    <div class="section-sub">Remove money from an existing account</div>
+  </div>
+  <form class="form" method="POST" action="{{ url_for('withdraw') }}">
+    <div class="form-row">
+      <label for="account_number">Account number</label>
+      <input class="input" id="account_number" name="account_number" type="number" min="1" placeholder="e.g., 1001" required />
+    </div>
+    <div class="form-row">
+      <label for="amount">Amount</label>
+      <input class="input" id="amount" name="amount" type="number" step="0.01" min="0.01" placeholder="e.g., 250.00" required />
+    </div>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button class="btn btn-danger" type="submit">Withdraw</button>
+      <a class="btn btn-secondary" href="{{ url_for('index') }}">Back to dashboard</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

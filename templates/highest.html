@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %}Highest balance · Forest FinTech{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="section-title">
+    <h2>Highest balance account</h2>
+    <div class="section-sub">Top holder by current balance</div>
+  </div>
+
+  {% if highest %}
+    <div class="card">
+      <div><span class="badge badge-forest">Acc {{ highest.account_number }}</span></div>
+      <div style="margin-top:8px; font-weight:600;">{{ highest.holder_name }}</div>
+      <div style="margin-top:4px; color: var(--text-600);">Balance: {{ highest.balance }}</div>
+      <div style="margin-top:12px;">
+        <a class="btn btn-secondary" href="{{ url_for('accounts') }}">View all accounts</a>
+      </div>
+    </div>
+  {% else %}
+    <div class="section-sub">No accounts available.</div>
+  {% endif %}
+
+  <div style="margin-top:12px;">
+    <a class="btn" href="{{ url_for('index') }}">Back to dashboard</a>
+  </div>
+</div>
+{% endblock %}
